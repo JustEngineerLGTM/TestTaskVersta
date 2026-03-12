@@ -12,7 +12,7 @@ using TestTaskVersta.Models;
 namespace TestTaskVersta.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260312161058_Initial")]
+    [Migration("20260312163246_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

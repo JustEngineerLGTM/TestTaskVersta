@@ -26,6 +26,7 @@ namespace TestTaskVersta.Models
         public string ReceiverAddress { get; set; } = string.Empty;
 
         [Display(Name = "Вес груза")]
+        [Required(ErrorMessage = "Вес груза обязателен")]
         [Range(0.01, 100000, ErrorMessage = "Вес должен быть больше 0 и меньше 100000")]
         public double Weight { get; set; }
 
