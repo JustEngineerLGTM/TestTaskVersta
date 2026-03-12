@@ -1,0 +1,45 @@
+﻿@model List<TestTaskVersta.Models.Order>
+
+<h3>Список заказов</h3>
+
+<table class="table table-hover mt-3">
+    <thead>
+    <tr>
+        <th>№ Заказа</th>
+        <th>Откуда</th>
+        <th>Куда</th>
+        <th>Дата забора</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var order in Model)
+    {
+        <tr style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#orderModal-@order.Id">
+            <td>@order.OrderNumber</td>
+            <td>@order.SenderCity</td>
+            <td>@order.ReceiverCity</td>
+            <td>@order.PickupDate.ToString("dd.MM.yyyy")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@foreach (var order in Model)
+{
+    <div class="modal fade" id="orderModal-@order.Id" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Информация о заказе @order.OrderNumber</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Отправитель:</strong> @order.SenderCity, @order.SenderAddress</p>
+                    <p><strong>Получатель:</strong> @order.ReceiverCity, @order.ReceiverAddress</p>
+                    <p><strong>Вес:</strong> @order.Weight кг</p>
+                    <p><strong>Дата забора:</strong> @order.PickupDate.ToString("dd.MM.yyyy")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
