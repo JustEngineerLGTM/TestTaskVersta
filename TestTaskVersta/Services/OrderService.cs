@@ -7,6 +7,7 @@ public class OrderService(IOrderRepository repository) : IOrderService
 {
     public async Task CreateOrderAsync(Order order)
     {
+        // Specify Date to Utc for Postgres
         order.PickupDate = DateTime.SpecifyKind(order.PickupDate, DateTimeKind.Utc);
         await repository.AddAsync(order);
     }
