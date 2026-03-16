@@ -1,4 +1,4 @@
-namespace TestTaskVersta.Models;
+namespace TestTaskVersta.Models.ViewModels;
 
 public class ErrorViewModel
 {

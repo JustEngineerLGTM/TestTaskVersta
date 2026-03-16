@@ -1,40 +1,64 @@
+// Controllers/HomeController.cs
+
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TestTaskVersta.Models;
+using TestTaskVersta.Models.Entities;
+using TestTaskVersta.Models.ViewModels;
+using TestTaskVersta.Services;
 
 namespace TestTaskVersta.Controllers;
 
-public class HomeController(AppDbContext db) : Controller
+public class HomeController(IOrderService orderService) : Controller
 {
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
-    
+
     [HttpPost]
-    public async Task<IActionResult> Create(Order order)
+    public async Task<IActionResult> Create(CreateOrderViewModel model)
     {
         if (!ModelState.IsValid)
-            return View(order);
-        
-        order.PickupDate = DateTime.SpecifyKind(order.PickupDate, DateTimeKind.Utc);
-        db.Orders.Add(order);
-        await db.SaveChangesAsync();
+            return View(model);
+
+        var order = new Order
+        {
+            SenderCity = model.SenderCity,
+            SenderAddress = model.SenderAddress,
+            ReceiverCity = model.ReceiverCity,
+            ReceiverAddress = model.ReceiverAddress,
+            Weight = model.Weight,
+            PickupDate = model.PickupDate
+        };
+
+        await orderService.CreateOrderAsync(order);
 
         TempData["Success"] = "Заказ успешно создан";
-        return RedirectToAction("Create"); 
+        return RedirectToAction("Create");
     }
     
     [HttpGet]
     public async Task<IActionResult> List()
     {
-        var orders = await db.Orders.OrderByDescending(o => o.Id).ToListAsync();
-        return View(orders);
+        var orders = await orderService.GetOrdersAsync();
+
+        var viewModels = orders.Select(o => new OrderListViewModel
+        {
+            Id = o.Id,
+            OrderNumber = o.OrderNumber,
+            SenderCity = o.SenderCity,
+            SenderAddress = o.SenderAddress,
+            ReceiverCity = o.ReceiverCity,
+            ReceiverAddress = o.ReceiverAddress,
+            Weight = o.Weight,
+            PickupDate = o.PickupDate
+        }).ToList();
+
+        return View(viewModels);
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -1,4 +1,6 @@
 ﻿    using Microsoft.EntityFrameworkCore;
+    using TestTaskVersta.Models.Entities;
+
     namespace TestTaskVersta.Models
 
     {

@@ -1,9 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using TestTaskVersta.Middleware;
 using TestTaskVersta.Models;
+using TestTaskVersta.Repositories;
+using TestTaskVersta.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
@@ -25,6 +31,7 @@ using (var scope = app.Services.CreateScope())
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 app.MapControllerRoute(

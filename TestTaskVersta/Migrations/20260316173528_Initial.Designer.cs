@@ -12,7 +12,7 @@ using TestTaskVersta.Models;
 namespace TestTaskVersta.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260312163246_Initial")]
+    [Migration("20260316173528_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace TestTaskVersta.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TestTaskVersta.Models.Order", b =>
+            modelBuilder.Entity("TestTaskVersta.Models.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()

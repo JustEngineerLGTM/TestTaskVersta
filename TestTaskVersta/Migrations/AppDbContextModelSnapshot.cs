@@ -22,7 +22,7 @@ namespace TestTaskVersta.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TestTaskVersta.Models.Order", b =>
+            modelBuilder.Entity("TestTaskVersta.Models.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
