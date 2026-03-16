@@ -1,5 +1,6 @@
 ﻿namespace TestTaskVersta.Models.ViewModels;
 
+// ViewModel for listing orders
 public class OrderListViewModel
 {
     public Guid Id { get; set; }

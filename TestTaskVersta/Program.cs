@@ -15,9 +15,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         o => o.EnableRetryOnFailure(
-            maxRetryCount: 10,
-            maxRetryDelay: TimeSpan.FromSeconds(5),
-            errorCodesToAdd: null
+            10,
+            TimeSpan.FromSeconds(5),
+            null
         )
     ));
 
@@ -35,7 +35,7 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=List}/{id?}");
+    "default",
+    "{controller=Home}/{action=List}/{id?}");
 
 app.Run();

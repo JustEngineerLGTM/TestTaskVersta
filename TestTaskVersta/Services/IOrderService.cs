@@ -1,5 +1,4 @@
-﻿using TestTaskVersta.Models;
-using TestTaskVersta.Models.Entities;
+﻿using TestTaskVersta.Models.Entities;
 
 namespace TestTaskVersta.Services;
 

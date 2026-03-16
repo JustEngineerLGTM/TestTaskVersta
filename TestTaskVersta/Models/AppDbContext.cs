@@ -1,11 +1,9 @@
-﻿    using Microsoft.EntityFrameworkCore;
-    using TestTaskVersta.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TestTaskVersta.Models.Entities;
 
-    namespace TestTaskVersta.Models
+namespace TestTaskVersta.Models;
 
-    {
-        public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
-        {
-            public DbSet<Order> Orders { get; set; }
-        }
-    }
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+{
+    public DbSet<Order> Orders { get; set; }
+}

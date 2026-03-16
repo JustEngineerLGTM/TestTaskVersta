@@ -2,6 +2,7 @@
 
 namespace TestTaskVersta.Models.ViewModels;
 
+// ViewModel for creating orders
 public class CreateOrderViewModel
 {
     [Display(Name = "Город отправителя")]

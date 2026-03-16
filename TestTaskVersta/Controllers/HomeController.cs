@@ -2,7 +2,6 @@
 
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using TestTaskVersta.Models;
 using TestTaskVersta.Models.Entities;
 using TestTaskVersta.Models.ViewModels;
 using TestTaskVersta.Services;
@@ -38,7 +37,7 @@ public class HomeController(IOrderService orderService) : Controller
         TempData["Success"] = "Заказ успешно создан";
         return RedirectToAction("Create");
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> List()
     {

@@ -15,8 +15,7 @@ public class OrderRepository(AppDbContext dbContext) : IOrderRepository
     public async Task<IEnumerable<Order>> GetAllAsync()
     {
         return await dbContext.Orders
-            .AsNoTracking() 
+            .AsNoTracking()
             .ToListAsync();
     }
-    
 }
