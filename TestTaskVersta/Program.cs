@@ -1,12 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using TestTaskVersta.Middleware;
 using TestTaskVersta.Models;
 using TestTaskVersta.Repositories;
 using TestTaskVersta.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 // Order Services
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -31,6 +38,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.Migrate();
 }
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseStaticFiles();
 app.UseRouting();

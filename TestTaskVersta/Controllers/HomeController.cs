@@ -1,5 +1,4 @@
-// Controllers/HomeController.cs
-
+using AutoMapper;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TestTaskVersta.Models.Entities;
@@ -8,29 +7,21 @@ using TestTaskVersta.Services;
 
 namespace TestTaskVersta.Controllers;
 
-public class HomeController(IOrderService orderService) : Controller
+public class HomeController(IOrderService orderService, IMapper mapper) : Controller
 {
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
-
+   
     [HttpPost]
     public async Task<IActionResult> Create(CreateOrderViewModel model)
     {
         if (!ModelState.IsValid)
             return View(model);
 
-        var order = new Order
-        {
-            SenderCity = model.SenderCity,
-            SenderAddress = model.SenderAddress,
-            ReceiverCity = model.ReceiverCity,
-            ReceiverAddress = model.ReceiverAddress,
-            Weight = model.Weight,
-            PickupDate = model.PickupDate
-        };
+        var order = mapper.Map<Order>(model);
 
         await orderService.CreateOrderAsync(order);
 
@@ -42,18 +33,7 @@ public class HomeController(IOrderService orderService) : Controller
     public async Task<IActionResult> List()
     {
         var orders = await orderService.GetOrdersAsync();
-
-        var viewModels = orders.Select(o => new OrderListViewModel
-        {
-            Id = o.Id,
-            OrderNumber = o.OrderNumber,
-            SenderCity = o.SenderCity,
-            SenderAddress = o.SenderAddress,
-            ReceiverCity = o.ReceiverCity,
-            ReceiverAddress = o.ReceiverAddress,
-            Weight = o.Weight,
-            PickupDate = o.PickupDate
-        }).ToList();
+        var viewModels = mapper.Map<List<OrderListViewModel>>(orders);
 
         return View(viewModels);
     }
